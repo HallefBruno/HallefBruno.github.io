@@ -1,0 +1,54 @@
+<h3 class="mt-4">Clientes</h3>
+<ol class="breadcrumb mb-4">
+  <li class="breadcrumb-item active">{{cliente.id ? 'Edição':'Novo'}}</li>
+</ol>
+<div class="container-fluid">
+  <form #clienteForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="alert alert-success" role="alert" *ngIf="alertSucesso==true">
+          Cliente salvo com sucesso!
+        </div>
+        <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+          {{erro}}
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="cliente.id">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>ID:</label>
+          <input type="text" [ngModel]="cliente.id" class="form-control" name="id" disabled />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Data cadastro:</label>
+          <input type="date" class="form-control" [ngModel]="cliente.dataCadastro" name="dataCadastro" disabled />
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="nome">Nome: *</label>
+          <input type="text" id="nome" [(ngModel)]="cliente.nome" name="nome" class="form-control" autocomplete="off" />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="cpf">CPF: *</label>
+          <input type="text" id="cpf" [(ngModel)]="cliente.cpf" name="cpf" class="form-control" autocomplete="off" mask="000.000.000-00" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <button type="submit" class="btn btn-sm btn-primary mb-2" *ngIf="!cliente.id">Salvar</button>
+        <button type="submit" class="btn btn-sm btn-primary mb-2" *ngIf="cliente.id">Atualizar</button>
+        <button class="btn btn-sm btn-info mb-2 ml-1" (click)="irParaListagem()">Ir para lista</button>
+      </div>
+    </div>
+  </form>
+</div>

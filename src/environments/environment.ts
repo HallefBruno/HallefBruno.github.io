@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: "http://127.0.0.1:8182/api",
+  apiAuthTk: "http://127.0.0.1:8182",
+  clienteId : 'app-service-manager',
+  secret: 'asp',
+  urlToken: '/oauth/token'
 };
 
 /*

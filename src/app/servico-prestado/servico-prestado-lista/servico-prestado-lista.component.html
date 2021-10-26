@@ -1,0 +1,95 @@
+<h3 class="mt-4">Serviço prestado</h3>
+<ol class="breadcrumb mb-4">
+  <li class="breadcrumb-item active">Pesquisar</li>
+</ol>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+      {{ mensagemSucesso }}
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="mensagemErro">
+      {{ mensagemErro }}
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="consultar()">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="cliente">Cliente</label>
+          <input class="form-control" [(ngModel)]="nomeCliente" type="text" name="nomeCliente" id="nomeCliente">
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="dataServicoPrestado">Data do serviço</label>
+          <input class="form-control" [(ngModel)]="dataServicoPrestado" type="date" name="dataServicoPrestado" id="dataServicoPrestado">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <button type="submit"  class="btn btn-primary btn-sm mb-3">Pesquisar</button>
+        <button routerLink="/servico-prestado/form"  class="btn btn-info btn-sm mb-3 ml-1">Novo</button>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Data</th>
+              <th scope="col">Valor</th>
+              <th class="text-center" scope="col">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let servico of listaServicosPrestados">
+              <th scope="row">{{servico.id}}</th>
+              <td>{{servico.cliente.nome}}</td>
+              <td>{{servico.descricao}}</td>
+              <td>{{servico.dataServicoPrestado |date:'dd/MM/yyyy'}}</td>
+              <td>{{servico.valor| currency:"R$"}}</td>
+              <td class="text-center">
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-sm btn-primary" routerLink="/servico-prestado/form/{{ servico.id }}">Editar</button>
+                  <button type="button" (click)="preparaDelecao(servico)" data-toggle="modal" data-target="#modalDelete" class="btn btn-sm btn-danger">Excluir</button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="!listaServicosPrestados">
+              <td colspan="6">Nenhum registro encontrado</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalDelete" class="modal fade" role="dialog" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Confimar a exclusão</h4>
+        </div>
+        <div class="modal-body" *ngIf="spSelecionadoDelete">
+          Confirma a deleção do serviço <b>{{spSelecionadoDelete.descricao}}</b> ?
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-success" data-dismiss="modal" (click)="deletarServico()">Confirmar</button>
+          <button class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

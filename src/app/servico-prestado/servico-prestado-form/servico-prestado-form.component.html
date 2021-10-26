@@ -1,0 +1,59 @@
+<h3 class="mt-4">Serviço prestado</h3>
+<ol class="breadcrumb mb-4">
+  <li class="breadcrumb-item active">{{servicoPrestado.id ? 'Edição':'Novo'}}</li>
+</ol>
+
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="alert alert-success" role="alert" *ngIf="alertSucesso==true">
+          Serviço prestado salvo com sucesso!
+        </div>
+        <div class="alert alert-danger" role="alert" *ngFor="let erro of listErros">
+          {{erro}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="clientes">Cliente: *</label>
+          <select class="form-control" name="clientes" id="clientes" [ngModelOptions]="{standalone:true}" [(ngModel)]="servicoPrestado.clienteId">
+            <option value="" >Selecione o cliente</option>
+            <option *ngFor="let cliente of clientes"  [ngValue]="cliente.id">{{cliente.nome}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="descricao">Descrição: *</label>
+          <input class="form-control" autocomplete="off" [(ngModel)]="servicoPrestado.descricao" type="text" name="descricao" id="descricao"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="data">Data: *</label>
+          <input class="form-control"  [(ngModel)]="servicoPrestado.dataServicoPrestado" type="date" name="dataServicoPrestado" id="dataServicoPrestado"></div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="valor">Preço: *</label>
+          <input currencyMask  class="form-control" autocomplete="off" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" [(ngModel)]="servicoPrestado.preco" type="text" name="preco" id="preco" ></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <button type="submit" class="btn btn-sm btn-primary mb-2" *ngIf="!servicoPrestado.id">Salvar</button>
+        <button type="submit" class="btn btn-sm btn-primary mb-2" *ngIf="servicoPrestado.id">Atualizar</button>
+        <button class="btn btn-sm btn-info mb-2 ml-1" (click)="irParaListagem()">Ir para lista</button>
+      </div>
+    </div>
+
+  </form>
+</div>
